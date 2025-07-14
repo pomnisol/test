@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой Калькулятор</title>
+    <style>
+        body { background-color: #f0f0f0; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        h1 { color: #333; }
+        input { padding: 10px; margin: 5px; width: 200px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { font-size: 24px; color: #333; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Простой Калькулятор</h1>
+    <input type="number" id="num1" placeholder="Первое число">
+    <input type="number" id="num2" placeholder="Второе число">
+    <br>
+    <button onclick="calculate('+')">+</button>
+    <button onclick="calculate('-')">-</button>
+    <button onclick="calculate('*')">*</button>
+    <button onclick="calculate('/')">/</button>
+    <div id="result"></div>
+
+    <script>
+        function calculate(op) {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            let result;
+            if (isNaN(num1) || isNaN(num2)) {
+                result = 'Введите числа!';
+            } else {
+                switch (op) {
+                    case '+': result = num1 + num2; break;
+                    case '-': result = num1 - num2; break;
+                    case '*': result = num1 * num2; break;
+                    case '/': result = num2 !== 0 ? num1 / num2 : 'Деление на 0!'; break;
+                }
+            }
+            document.getElementById('result').innerText = `Результат: ${result}`;
+        }
+    </script>
+</body>
+</html>
