@@ -11,7 +11,9 @@
         button { padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
         button:hover { background-color: #45a049; }
         #result { font-size: 24px; color: #333; margin-top: 20px; }
+        #sendBtn { background-color: #2196F3; }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Добавь это для API -->
 </head>
 <body>
     <h1>Простой Калькулятор</h1>
@@ -23,23 +25,31 @@
     <button onclick="calculate('*')">*</button>
     <button onclick="calculate('/')">/</button>
     <div id="result"></div>
+    <button id="sendBtn" onclick="sendToChat()" style="display: none;">Отправить в чат</button>
 
     <script>
+        let currentResult = '';
+
         function calculate(op) {
             const num1 = parseFloat(document.getElementById('num1').value);
             const num2 = parseFloat(document.getElementById('num2').value);
-            let result;
             if (isNaN(num1) || isNaN(num2)) {
-                result = 'Введите числа!';
+                currentResult = 'Введите числа!';
             } else {
                 switch (op) {
-                    case '+': result = num1 + num2; break;
-                    case '-': result = num1 - num2; break;
-                    case '*': result = num1 * num2; break;
-                    case '/': result = num2 !== 0 ? num1 / num2 : 'Деление на 0!'; break;
+                    case '+': currentResult = num1 + num2; break;
+                    case '-': currentResult = num1 - num2; break;
+                    case '*': currentResult = num1 * num2; break;
+                    case '/': currentResult = num2 !== 0 ? num1 / num2 : 'Деление на 0!'; break;
                 }
             }
-            document.getElementById('result').innerText = `Результат: ${result}`;
+            document.getElementById('result').innerText = `Результат: ${currentResult}`;
+            document.getElementById('sendBtn').style.display = 'block'; // Показываем кнопку
+        }
+
+        function sendToChat() {
+            Telegram.WebApp.sendData(currentResult); // Шлёт результат в бот
+            Telegram.WebApp.close(); // Закрывает WebApp
         }
     </script>
 </body>
