@@ -28,6 +28,8 @@
     <button id="sendBtn" onclick="sendToChat()" style="display: none;">Отправить в чат</button>
 
     <script>
+        Telegram.WebApp.ready();  // Инициализация — фиксит мобилу
+
         let currentResult = '';
 
         function calculate(op) {
@@ -48,6 +50,7 @@
         }
 
         function sendToChat() {
+            alert('Отправляю: ' + currentResult);  // Для дебага — увидишь на мобиле
             Telegram.WebApp.sendData(currentResult.toString());
             Telegram.WebApp.close();
         }
